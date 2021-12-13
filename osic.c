@@ -9,7 +9,7 @@ typedef union {
   {
     uint8_t a,b,c,d;
   };
-  uint32_t val;
+  int32_t val;
 }ISA;
 
 #define CADDR 45 // console address
@@ -42,7 +42,7 @@ Instruction subleq4 a, b, c, d
 int32_t subleq(ISA ins){
     Mem[Mem[ins.a].val].val = ((ins.d)?Mem[ins.d].val:Mem[Mem[ins.a].val].val) - Mem[ins.b].val;
     if (Mem[Mem[ins.a].val].val <= 0)
-      return (int32_t)Mem[ins.c].val;
+      return Mem[ins.c].val;
     return 0;
 }
 
@@ -120,8 +120,8 @@ int main(int argc, char *argv[]){
   }
 
   printf("\n%u\n",Mem[0].val);
-  /*for(size_t i = 0; i < sizeof(Mem)/sizeof(ISA); i++){
+  for(size_t i = 0; i < sizeof(Mem)/sizeof(ISA); i++){
     printf("%u: x%02x, x%02x, x%02x, x%02x, %d\n",i,Mem[i].a,Mem[i].b,Mem[i].c,Mem[i].d,Mem[i].val);
-  }*/
+  }
   return 0;
 }
